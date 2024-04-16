@@ -1,0 +1,30 @@
+-- BDD para microservicio
+
+-- CREACION USUARIO
+
+ALTER SESSION SET "_Oracle_Script"=TRUE;
+
+CREATE USER PETSSHOP
+IDENTIFIED BY "PetsShop_2024"
+DEFAULT TABLESPACE USERS
+TEMPORARY TABLESPACE TEMP
+QUOTA UNLIMITED ON USERS;
+
+GRANT CREATE SESSION, RESOURCE TO PETSSHOP;
+
+ALTER USER PETSSHOP 
+DEFAULT ROLE RESOURCE;
+
+
+
+-- CREACION TABLA
+create table product (
+    idproduct NUMBER,
+    nameproduct varchar2(250),
+    descripcion varchar2(250),
+    price NUMBER(11)
+);
+
+
+-- REGISTRO DE PRUEBA
+insert into product (nameproduct, descripcion, price) VALUES ('Mercat', 'Comida para gato',5990);
