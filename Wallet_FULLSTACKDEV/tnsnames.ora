@@ -1,0 +1,12 @@
+fullstackdev_high = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-santiago-1.oraclecloud.com))(connect_data=(service_name=g2e3f564b95381a_fullstackdev_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+fullstackdev_low = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-santiago-1.oraclecloud.com))(connect_data=(service_name=g2e3f564b95381a_fullstackdev_low.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+fullstackdev_medium = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-santiago-1.oraclecloud.com))(connect_data=(service_name=g2e3f564b95381a_fullstackdev_medium.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+fullstackdev_tp = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-santiago-1.oraclecloud.com))(connect_data=(service_name=g2e3f564b95381a_fullstackdev_tp.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+fullstackdev_tpurgent = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-santiago-1.oraclecloud.com))(connect_data=(service_name=g2e3f564b95381a_fullstackdev_tpurgent.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+
+

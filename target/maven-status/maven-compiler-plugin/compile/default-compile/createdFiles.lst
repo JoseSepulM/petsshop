@@ -1,0 +1,7 @@
+com\example\petsshop\service\ProductService.class
+com\example\petsshop\controller\ProductController$ErrorResponse.class
+com\example\petsshop\model\Product.class
+com\example\petsshop\controller\ProductController.class
+com\example\petsshop\service\ProductServiceImp.class
+com\example\petsshop\repository\ProductRepository.class
+com\example\petsshop\PetsshopApplication.class
