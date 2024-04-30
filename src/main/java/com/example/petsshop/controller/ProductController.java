@@ -3,8 +3,12 @@ package com.example.petsshop.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +24,9 @@ import com.example.petsshop.service.ProductService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 
 
@@ -28,22 +35,47 @@ import org.springframework.http.ResponseEntity;
 @RequestMapping("/products")
 public class ProductController {
 
+    private static final Logger log = LoggerFactory.getLogger(ProductController.class);
+
+
     @Autowired
     private ProductService productService;
 
     @GetMapping()
-    public List<Product> getAllProducts(){
-        return productService.getAllProducts();
+    public CollectionModel<EntityModel<Product>> getAllProducts() {
+        List<Product> products = productService.getAllProducts();
+        log.info("GET /products");
+        log.info("Retornando todos los productos");
+
+        List<EntityModel<Product>> productResources = products.stream()
+        .map( product -> EntityModel.of(product,
+            WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getProductById(product.getIdProduct())).withSelfRel()
+        ))
+        .collect(Collectors.toList());
+        
+        WebMvcLinkBuilder linkTo = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getAllProducts());
+        CollectionModel<EntityModel<Product>> resources = CollectionModel.of(productResources, linkTo.withRel("products"));
+
+        return resources;
     }
 
     @GetMapping("/{idProduct}")
-    public ResponseEntity<?> getProductById(@PathVariable Long idProduct){
-        Optional <Product> product = productService.getProductById(idProduct);
-        if(product.isEmpty()){
+    public ResponseEntity<?> getProductById(@PathVariable Long idProduct) {
+        Optional<Product> optionalProduct = productService.getProductById(idProduct);
+
+        log.info("GET /product");
+        log.info("Retornando un solo producto");
+
+        if (optionalProduct.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("Product not found with id: " + idProduct));
         }
-
-        return ResponseEntity.ok(product);
+        
+        Product product = optionalProduct.get();
+        EntityModel<Product> productResource = EntityModel.of(product,
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getProductById(idProduct)).withSelfRel(),
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getAllProducts()).withRel("allProducts"));
+    
+        return ResponseEntity.ok(productResource);
     }
 
     @PostMapping()
