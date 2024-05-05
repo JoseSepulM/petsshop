@@ -1,2 +1,3 @@
 com\example\petsshop\PetsshopApplicationTests.class
+com\example\petsshop\service\ProductServiceImpTest.class
 com\example\petsshop\controller\ProductControllerTest.class
